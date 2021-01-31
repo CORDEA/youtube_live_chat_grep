@@ -1,5 +1,7 @@
 from googleapiclient import discovery
 
+from message import Message
+
 
 class ApiClient:
     def __init__(self, key):
@@ -17,4 +19,4 @@ class ApiClient:
     def fetch_messages(self, chat_id):
         messages = self.client.liveChatMessages()
         request = messages.list(liveChatId=chat_id, part='snippet')
-        return request.execute()['items']
+        return [Message(m) for m in request.execute()['items']]
