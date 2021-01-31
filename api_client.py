@@ -14,7 +14,7 @@ class ApiClient:
         response = request.execute()
         return response['items'][0]['liveStreamingDetails']['activeLiveChatId']
 
-    def fetch_messages(self, id):
+    def fetch_messages(self, chat_id):
         messages = self.client.liveChatMessages()
-        request = messages.list(liveChatId=id, part='snippet')
-        response = request.execute()
+        request = messages.list(liveChatId=chat_id, part='snippet')
+        return request.execute()['items']
