@@ -1,6 +1,6 @@
 import os
 import re
-import sys
+from argparse import ArgumentParser
 
 from api_client import ApiClient
 
@@ -15,10 +15,15 @@ def grep(messages, query):
 
 
 def main():
+    parser = ArgumentParser()
+    parser.add_argument('id', help='YouTube video ID')
+    parser.add_argument('query', help='Search query')
+    args = parser.parse_args()
+
     client = ApiClient(os.environ['YOUTUBE_API_KEY'])
-    chat_id = client.find_chat_id(sys.argv[1])
+    chat_id = client.find_chat_id(args.id)
     messages = client.fetch_messages(chat_id)
-    print(grep(messages, sys.argv[2]))
+    print(grep(messages, args.query))
 
 
 if __name__ == '__main__':
